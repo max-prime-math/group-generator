@@ -59,57 +59,57 @@
             margin-bottom: 25px; 
         }
 
-        /* Main UI Buttons */
-        .controls button { 
-            flex: 1;
-            min-width: 120px;
-            padding: 16px 10px; 
+        /* All Buttons Base Styling */
+        button { 
             border: none; 
             border-radius: 8px; 
             cursor: pointer; 
             font-weight: 600; 
             font-size: 0.95rem;
-            transition: transform 0.1s, opacity 0.2s; 
+            transition: transform 0.1s, filter 0.2s; 
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
         }
 
-        button:active { transform: scale(0.98); }
+        /* Generic Hover effect: darken slightly */
+        button:hover {
+            filter: brightness(90%);
+        }
+
+        button:active { 
+            transform: scale(0.98); 
+            filter: brightness(80%);
+        }
+
+        /* Main UI Button Specifics */
+        .controls button {
+            flex: 1;
+            min-width: 120px;
+            padding: 16px 10px;
+        }
 
         .btn-primary { background: var(--primary); color: white; }
         .btn-secondary { background: var(--secondary); color: white; }
         .btn-export { background: var(--success); color: white; }
-.btn-reset { 
-    background-color: #ffffff !important; 
-    color: #d93025 !important; 
-    border: 2px solid #d93025 !important; 
-    border-style: solid !important;
-    padding: 14px 10px; 
-    box-sizing: border-box;
-    outline: none;
-    -webkit-appearance: none;
-}
+        
+        /* Reset Button Specifics with Firefox Fix */
+        .btn-reset { 
+            background-color: #ffffff !important; 
+            color: var(--danger) !important; 
+            border: 2px solid var(--danger) !important; 
+            border-style: solid !important;
+            box-sizing: border-box;
+            -webkit-appearance: none;
+            outline: none;
+        }
 
-.btn-reset:hover {
-/* This targets all buttons and makes them 10% darker on hover */
-button:hover {
-    filter: brightness(90%);
-    cursor: pointer;
-}
+        .btn-reset:hover {
+            background-color: #fff5f4 !important;
+            filter: brightness(95%);
+        }
 
-/* Specific hover for the Reset button to maintain its white background but darken the red */
-.btn-reset:hover {
-    background-color: #fff5f4 !important;
-    filter: brightness(95%);
-}
-
-/* Active state for a "pressed" feel */
-button:active {
-    transform: scale(0.98);
-    filter: brightness(80%);
-}
         .output-container { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
@@ -164,7 +164,7 @@ button:active {
             display: none !important; 
         }
 
-        /* Modal Sandbox - High Priority Styles */
+        /* Modal Sandbox */
         #exportModal { 
             display: none; 
             position: fixed; 
@@ -194,20 +194,23 @@ button:active {
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            gap: 10px; 
+            gap: 15px; 
         }
 
-        /* Force modal buttons to always show and be same width */
+        /* Symmetrical Modal Buttons */
         .modal-footer button { 
             display: flex !important; 
             visibility: visible !important;
             flex: 1; 
-            min-width: 120px; 
             padding: 14px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
+        }
+
+        #copyFeedback { 
+            display: none; 
+            color: var(--success); 
+            font-weight: bold; 
+            text-align: center; 
+            margin-top: 15px; 
         }
 
         @media (max-width: 600px) {
@@ -245,7 +248,7 @@ button:active {
             <button class="btn-primary" id="copyBtn" onclick="copyToClipboard()">Copy</button>
             <button class="btn-secondary" onclick="closeModal()">Close</button>
         </div>
-        <div id="copyFeedback" style="display:none; color: var(--success); font-weight: bold; text-align: center; margin-top: 10px;">Copied to clipboard!</div>
+        <div id="copyFeedback">Copied to clipboard!</div>
     </div>
 </div>
 
