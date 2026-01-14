@@ -3,8 +3,6 @@ Generate random groups based on fair grades.
 
 Access here: https://max-prime-math.github.io/group-generator/generator.html
 
-# Balanced Group Sorter
-
 A privacy-focused, client-side web application designed for educators to create student groups with equalized grade averages. This tool uses a stratified sampling approach combined with a hill-climbing optimization algorithm to ensure every group is mathematically balanced.
 
 ## Features
