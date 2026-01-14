@@ -82,15 +82,18 @@
         .btn-secondary { background: var(--secondary); color: white; }
         .btn-export { background: var(--success); color: white; }
 .btn-reset { 
-    background: white; 
-    color: #000000; 
-    border: 2px solid #000000; 
+    background-color: #ffffff !important; 
+    color: #000000 !important; 
+    border: 2px solid #000000 !important; /* Explicitly solid and black */
+    border-style: solid !important;
     padding: 14px 10px; 
+    box-sizing: border-box; /* Ensures border doesn't grow the button size */
+    outline: none;
+    -webkit-appearance: none; /* Removes default OS styling in some browsers */
 }
 
-/* Optional: Add a slight hover effect to make it feel more interactive */
 .btn-reset:hover {
-    background: #f0f0f0;
+    background-color: #eeeeee !important;
 }
         .output-container { 
             display: grid; 
