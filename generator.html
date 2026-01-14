@@ -81,8 +81,17 @@
         .btn-primary { background: var(--primary); color: white; }
         .btn-secondary { background: var(--secondary); color: white; }
         .btn-export { background: var(--success); color: white; }
-        .btn-reset { background: white; color: var(--danger); border: 2px solid var(--danger); padding: 14px 10px; }
+.btn-reset { 
+    background: white; 
+    color: #000000; 
+    border: 2px solid #000000; 
+    padding: 14px 10px; 
+}
 
+/* Optional: Add a slight hover effect to make it feel more interactive */
+.btn-reset:hover {
+    background: #f0f0f0;
+}
         .output-container { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
