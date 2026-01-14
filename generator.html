@@ -83,17 +83,32 @@
         .btn-export { background: var(--success); color: white; }
 .btn-reset { 
     background-color: #ffffff !important; 
-    color: #000000 !important; 
-    border: 2px solid #000000 !important; /* Explicitly solid and black */
+    color: #d93025 !important; 
+    border: 2px solid #d93025 !important; 
     border-style: solid !important;
     padding: 14px 10px; 
-    box-sizing: border-box; /* Ensures border doesn't grow the button size */
+    box-sizing: border-box;
     outline: none;
-    -webkit-appearance: none; /* Removes default OS styling in some browsers */
+    -webkit-appearance: none;
 }
 
 .btn-reset:hover {
-    background-color: #eeeeee !important;
+/* This targets all buttons and makes them 10% darker on hover */
+button:hover {
+    filter: brightness(90%);
+    cursor: pointer;
+}
+
+/* Specific hover for the Reset button to maintain its white background but darken the red */
+.btn-reset:hover {
+    background-color: #fff5f4 !important;
+    filter: brightness(95%);
+}
+
+/* Active state for a "pressed" feel */
+button:active {
+    transform: scale(0.98);
+    filter: brightness(80%);
 }
         .output-container { 
             display: grid; 
