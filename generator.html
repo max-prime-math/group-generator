@@ -59,7 +59,8 @@
             margin-bottom: 25px; 
         }
 
-        button { 
+        /* Main UI Buttons */
+        .controls button { 
             flex: 1;
             min-width: 120px;
             padding: 16px 10px; 
@@ -127,7 +128,7 @@
             padding-top: 10px; 
         }
 
-        /* Presentation Mode Logic - SPECIFICALLY targets main UI elements */
+        /* Presentation Mode Logic */
         body.presentation-mode #inputSection, 
         body.presentation-mode .btn-primary,
         body.presentation-mode .btn-reset,
@@ -136,7 +137,7 @@
             display: none !important; 
         }
 
-        /* Ensures Modal is ALWAYS visible even in presentation mode */
+        /* Modal Sandbox - High Priority Styles */
         #exportModal { 
             display: none; 
             position: fixed; 
@@ -145,23 +146,48 @@
             background: rgba(0,0,0,0.7); 
             align-items: center; 
             justify-content: center; 
-            z-index: 9999; /* Higher than everything */
+            z-index: 9999; 
             padding: 20px; 
             box-sizing: border-box; 
         }
         
-        /* Forces buttons inside modal to stay visible */
-        #exportModal button { display: flex !important; flex: none; }
-
         .modal-content { background: white; padding: 25px; border-radius: 12px; width: 100%; max-width: 500px; }
-        #exportArea { width: 100%; height: 200px; margin-bottom: 15px; font-family: sans-serif; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
-        .modal-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        
+        #exportArea { 
+            width: 100%; height: 200px; 
+            margin-bottom: 15px; 
+            font-family: sans-serif; 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+            box-sizing: border-box;
+        }
+
+        .modal-footer { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            gap: 10px; 
+        }
+
+        /* Force modal buttons to always show and be same width */
+        .modal-footer button { 
+            display: flex !important; 
+            visibility: visible !important;
+            flex: 1; 
+            min-width: 120px; 
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
 
         @media (max-width: 600px) {
             body { padding: 10px; margin: 10px auto; }
             .controls { flex-direction: column; }
-            button { width: 100%; flex: none; padding: 18px; font-size: 1.1rem; }
-            .btn-reset { order: 4; } /* Puts reset at bottom on mobile */
+            .controls button { width: 100%; flex: none; padding: 18px; font-size: 1.1rem; }
+            .btn-reset { order: 4; }
         }
     </style>
 </head>
@@ -189,12 +215,10 @@
         <h3>Classroom Export</h3>
         <textarea id="exportArea" readonly></textarea>
         <div class="modal-footer">
-            <div style="display:flex; align-items:center;">
-                <button class="btn-primary" id="copyBtn" onclick="copyToClipboard()" style="width: 100px;">Copy</button>
-                <span id="copyFeedback" style="display:none; color: var(--success); font-weight: bold; margin-left: 10px;">Copied!</span>
-            </div>
-            <button class="btn-secondary" onclick="closeModal()" style="width: 100px;">Close</button>
+            <button class="btn-primary" id="copyBtn" onclick="copyToClipboard()">Copy</button>
+            <button class="btn-secondary" onclick="closeModal()">Close</button>
         </div>
+        <div id="copyFeedback" style="display:none; color: var(--success); font-weight: bold; text-align: center; margin-top: 10px;">Copied to clipboard!</div>
     </div>
 </div>
 
@@ -239,10 +263,6 @@
         else if (n % 3 === 2) { num3s = Math.floor(n / 3); num2s = 1; }
         else if (n % 3 === 1) { num3s = Math.floor(n / 3) - 1; num2s = 2; }
 
-        let high = students.slice(0, num3s + num2s);
-        let mid = students.slice(num3s + num2s, (num3s * 2) + num2s);
-        let low = students.slice((num3s * 2) + num2s);
-
         const shuffle = arr => {
             for (let i = arr.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -250,6 +270,10 @@
             }
             return arr;
         };
+
+        let high = students.slice(0, num3s + num2s);
+        let mid = students.slice(num3s + num2s, (num3s * 2) + num2s);
+        let low = students.slice((num3s * 2) + num2s);
 
         shuffle(high); shuffle(mid); shuffle(low);
 
@@ -317,8 +341,9 @@
         const area = document.getElementById("exportArea");
         area.select();
         navigator.clipboard.writeText(area.value);
-        document.getElementById('copyFeedback').style.display = 'inline';
-        setTimeout(() => { document.getElementById('copyFeedback').style.display = 'none'; }, 2000);
+        const feedback = document.getElementById('copyFeedback');
+        feedback.style.display = 'block';
+        setTimeout(() => { feedback.style.display = 'none'; }, 2500);
     }
 </script>
 </body>
