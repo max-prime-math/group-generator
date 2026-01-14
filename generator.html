@@ -36,7 +36,7 @@
         margin-bottom: 10px;
       }
 
-      /* DEFAULT STATE: Grades are visible */
+      /* DEFAULT STATE: Grades and Avg labels are visible */
       .grade-val,
       .avg-val {
         font-size: 0.85em;
@@ -46,12 +46,21 @@
         color: #1967d2;
         display: inline-block;
       }
+      .avg-container {
+        margin-top: 10px;
+        font-size: 0.9em;
+        font-weight: bold;
+        color: #666;
+        border-top: 1px dashed #eee;
+        padding-top: 5px;
+        display: block;
+      }
 
-      /* PRESENTATION MODE: Hide Input and Grades */
+      /* PRESENTATION MODE: Hide Input, Grades, and the entire Average line */
       body.presentation-mode #inputSection,
       body.presentation-mode .btn-primary,
       body.presentation-mode .grade-val,
-      body.presentation-mode .avg-val {
+      body.presentation-mode .avg-container {
         display: none !important;
       }
 
@@ -80,6 +89,11 @@
       .btn-export {
         background: #34a853;
         color: white;
+      }
+      .btn-copy {
+        background: #1a73e8;
+        color: white;
+        margin-right: 5px;
       }
       button:hover {
         opacity: 0.9;
@@ -114,15 +128,8 @@
         display: flex;
         justify-content: space-between;
       }
-      .avg-container {
-        margin-top: 10px;
-        font-size: 0.9em;
-        font-weight: bold;
-        color: #666;
-        border-top: 1px dashed #eee;
-        padding-top: 5px;
-      }
 
+      /* Modal styling */
       #exportModal {
         display: none;
         position: fixed;
@@ -146,6 +153,12 @@
         width: 100%;
         height: 250px;
         font-family: sans-serif;
+        margin-bottom: 15px;
+      }
+      .modal-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
     </style>
   </head>
@@ -165,10 +178,10 @@
           Sort Groups
         </button>
         <button class="btn-secondary" onclick="togglePresentation()">
-          Toggle Presentation Mode
+          Presentation Mode
         </button>
         <button class="btn-export" onclick="exportForClassroom()">
-          Export Text
+          Export
         </button>
       </div>
 
@@ -177,14 +190,26 @@
 
     <div id="exportModal">
       <div class="modal-content">
-        <h3>Copy for Google Classroom</h3>
-        <textarea id="exportArea" readonly></textarea><br />
-        <button
-          class="btn-secondary"
-          onclick="document.getElementById('exportModal').style.display='none'"
-        >
-          Close
-        </button>
+        <h3>Copy</h3>
+        <textarea id="exportArea" readonly></textarea>
+        <div class="modal-footer">
+          <div>
+            <button class="btn-copy" id="copyBtn" onclick="copyToClipboard()">
+              Copy Text
+            </button>
+            <span
+              id="copyFeedback"
+              style="display: none; color: #34a853; font-weight: bold"
+              >Copied!</span
+            >
+          </div>
+          <button
+            class="btn-secondary"
+            onclick="document.getElementById('exportModal').style.display='none'"
+          >
+            Close
+          </button>
+        </div>
       </div>
     </div>
 
@@ -193,9 +218,9 @@
 
       function togglePresentation() {
         document.body.classList.toggle("presentation-mode");
-        // Change button text to reflect state
+        const isPres = document.body.classList.contains("presentation-mode");
         const btn = document.querySelector(".btn-secondary");
-        btn.innerText = document.body.classList.contains("presentation-mode")
+        btn.innerText = isPres
           ? "Exit Presentation Mode"
           : "Enter Presentation Mode";
       }
@@ -262,7 +287,7 @@
         for (let i = 0; i < num2s; i++)
           currentGroups.push([high.pop(), low.pop()]);
 
-        // Hill-Climbing Optimization to tighten averages
+        // Hill-Climbing Optimization Pass
         for (let i = 0; i < 2000; i++) {
           let g1 = Math.floor(Math.random() * currentGroups.length);
           let g2 = Math.floor(Math.random() * currentGroups.length);
@@ -318,6 +343,20 @@
         });
         document.getElementById("exportArea").value = text;
         document.getElementById("exportModal").style.display = "flex";
+        document.getElementById("copyFeedback").style.display = "none";
+      }
+
+      function copyToClipboard() {
+        const copyText = document.getElementById("exportArea");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile
+        navigator.clipboard.writeText(copyText.value);
+
+        const feedback = document.getElementById("copyFeedback");
+        feedback.style.display = "inline";
+        setTimeout(() => {
+          feedback.style.display = "none";
+        }, 2000);
       }
     </script>
   </body>
