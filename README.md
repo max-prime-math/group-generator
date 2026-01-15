@@ -1,66 +1,43 @@
-# group-generator
+# Group Generator
 Generate random groups based on fair grades.
 
 Access here: https://max-prime-math.github.io/group-generator/generator.html
 
-A privacy-focused, client-side web application designed for educators to create student groups with equalized grade averages. This tool uses a stratified sampling approach combined with a hill-climbing optimization algorithm to ensure every group is mathematically balanced.
+A privacy-focused, educator-specific group generator designed to handle student data securely while maintaining an engaging classroom experience.
 
-## Features
+## Key Features
 
-### 1. Stratified Grouping Logic
-The algorithm prevents "clustering" of similar performance levels by dividing the student list into three tiers (High, Middle, and Low). Groups are initially formed by selecting one student from each tier, ensuring a diverse range of abilities in every group.
+### Privacy and Grade Protection
+* **Stealth Editor:** Numbers and percentages are automatically ghosted (made invisible) in the editor while typing, so students looking at the screen cannot see their grades.
+* **Snake-Sort Balancing:** Automatically balances groups by grade (pairing high-achievers with those needing support) without making the ranking obvious.
+* **Triple-Shuffle Logic:** 1. Shuffles student names within groups.
+    2. Shuffles the order of the groups on screen.
+    3. Assigns fresh, ordered numbering (Group 1, Group 2, etc.) only after the shuffle, completely obscuring original student ranks.
 
-### 2. Hill-Climbing Optimization
-To achieve the narrowest possible margin between group averages, the tool performs 2,000 stochastic swaps post-grouping. 
-* It identifies the "Score Spread" (difference between the highest and lowest group average).
-* It attempts to swap students between groups.
-* It retains the swap only if the global spread is reduced.
+### Classroom Tools
+* **Purple Rep Picker:** An animated representative selection tool that cycles through students in a vibrant purple flash.
+* **Rep-to-Top:** Once a representative is chosen, they are automatically moved to the top of their group list for easy identification.
+* **Creative Team Names:** Click any group title to instantly swap Group numbers for a fun name like "The Caffeine Cartel" or "Logic Legends."
+* **Student View:** One-click transition to a clean, full-screen mode that hides all settings, sidebars, and data inputs for projection.
 
-
-
-### 3. Presentation Mode
-Designed for screen-sharing in a classroom environment, the **Presentation Mode** hides:
-* The raw data input area.
-* Individual student grades.
-* Group average labels and values.
-
-### 4. Triple-Layer Anonymization
-To protect student self-esteem and prevent "ranking" identification:
-* **Bucket Shuffling:** Initial pairings are randomized within their tiers.
-* **Internal Shuffling:** The order of names within a group card is randomized.
-* **Group Order Shuffling:** The final sequence of groups is randomized so "Group 1" carries no specific mathematical weight.
-
----
-
-## Technical Specifications
-
-* **Language:** HTML5, CSS3, Vanilla JavaScript (ES6).
-* **Dependencies:** None.
-* **Privacy:** 100% client-side. No data is sent to a server; all processing happens in the local browser memory.
-* **Input Compatibility:** Supports Tab-separated values (direct copy-paste from Excel/Google Sheets) and space-separated values.
+### Classroom Management
+* **Attendance Tracking:** Click a student's name to mark them as absent. The Rep Picker will automatically ignore absent students.
+* **Class Manager:** Save multiple class lists locally to your browser. Use the Reset button to clear your current workspace without losing your saved classes.
+* **Flexible Grouping:** Toggle between "Students per Group" or "Total Number of Groups."
+* **Export and Copy:** Quickly generate a formatted text list of all groups (including reps and attendance status) to copy into your lesson plans or LMS.
 
 ---
 
 ## How to Use
 
-### Installation
-1. Save the provided HTML code as `index.html`.
-2. Open the file in any modern web browser.
-
-### Workflow
-1. **Input:** Paste your student names and grades into the text area.
-2. **Sort:** Click **Sort & Optimize Groups**. 
-3. **Verify:** Review the averages in the default view to ensure the balance is satisfactory.
-4. **Export:** Click **Export for Classroom** and use the **Copy Text** button to grab a grade-free list for your LMS.
-5. **Present:** Click **Enter Presentation Mode** to hide sensitive data before projecting the groups to the class.
+1. **Input Data:** Paste your student list. If you include grades (e.g., John Doe 85%), the generator will balance the teams. If not, it will group them randomly.
+2. **Set Parameters:** Choose your grouping mode (Total Groups vs. Students/Group) and enter the desired number.
+3. **Generate:** Click Generate. You can click this multiple times to reshuffle instantly.
+4. **Manage Attendance:** If a student is away, click their name to gray them out.
+5. **Project:** Switch to Student View and click Pick Reps to start the animation.
+6. **Save/Export:** Save the class to your sidebar for future use or use the Export button to copy the final lists.
 
 ---
 
-## Data Format Example
-The tool expects one student per line. Names can include spaces.
-
-| Name | Grade |
-| :--- | :--- |
-| Jane Doe | 98 |
-| John Smith | 85 |
-| Sam Baker | 72 |
+## Theme Support
+Includes a native Dark Mode toggle to reduce eye strain in different classroom lighting conditions.
