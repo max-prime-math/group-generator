@@ -147,6 +147,7 @@
             return { name, grade: isNaN(grade) ? 50 : grade, isRep: false, isAbsent: false };
         }).filter(s => s.name);
 
+        students.sort(() => Math.random() - 0.5);
         students.sort((a, b) => b.grade - a.grade);
 
         const val = parseInt(document.getElementById('groupVal').value) || 1;
@@ -172,6 +173,7 @@
         renderGroups();
         document.getElementById('repBtn').style.display = 'block';
         document.getElementById('repBtn').innerText = "Pick Reps";
+        document.querySelector('.btn-dice').style.display = 'block';
     }
 
     function renderGroups() {
@@ -252,10 +254,8 @@
     }
 
     function copyExport() {
-        const area = document.getElementById('exportArea');
-        area.select();
-        document.execCommand('copy');
-        alert("Groups copied to clipboard!");
+        const text = document.getElementById('exportArea').value;
+        navigator.clipboard.writeText(text).then(() => alert("Groups copied to clipboard!"));
     }
 
     function saveClass() {
@@ -292,6 +292,8 @@
             document.getElementById('inputData').value = '';
             document.getElementById('output').innerHTML = '';
             currentGroups = [];
+            document.getElementById('repBtn').style.display = 'none';
+            document.querySelector('.btn-dice').style.display = 'none';
             handleInput();
         }
     }
