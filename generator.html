@@ -45,8 +45,7 @@
         .btn-primary { flex: 2 !important; background: var(--primary); color: white; }
         .btn-success { background: var(--success); color: white; }
         .btn-purple { background: var(--purple); color: white; display: none; }
-        .btn-dice { background: var(--purple); color: white; display: none; width: 45px; flex: 0 !important; font-size: 1.2rem; opacity: 0.9; }
-        .btn-danger { color: var(--danger); border: 1px solid var(--danger) !important; background: none; }
+.btn-danger { color: var(--danger); border: 1px solid var(--danger) !important; background: none; }
 
         .output-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
         .group-card { background: var(--card-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--card-border); box-shadow: 0 4px 6px var(--shadow); }
@@ -66,7 +65,7 @@
         body.student-view .container { background: transparent; box-shadow: none; }
         body.student-view #exitViewBtn { display: block; }
         body.student-view .controls { justify-content: center; }
-        body.student-view .btn-purple, body.student-view .btn-dice { display: block !important; flex: 0 1 200px; }
+        body.student-view .btn-purple { display: block !important; flex: 0 1 200px; }
     </style>
 </head>
 <body>
@@ -100,8 +99,7 @@
 
     <div class="controls">
         <button class="btn-primary" onclick="generateGroups()">Generate</button>
-        <button class="btn-dice" onclick="renameAllGroups()" title="Randomize Team Names">🎲</button>
-        <button id="repBtn" class="btn-purple" onclick="pickRepresentatives()">Pick Reps</button>
+<button id="repBtn" class="btn-purple" onclick="pickRepresentatives()">Pick Reps</button>
         <button onclick="document.body.classList.toggle('student-view')">Student View</button>
         <button class="btn-success" onclick="openExport()">Export</button>
         <button class="btn-danger" onclick="resetWorkspace()">Reset</button>
@@ -173,7 +171,6 @@
         renderGroups();
         document.getElementById('repBtn').style.display = 'block';
         document.getElementById('repBtn').innerText = "Pick Reps";
-        document.querySelector('.btn-dice').style.display = 'block';
     }
 
     function renderGroups() {
@@ -205,12 +202,7 @@
         renderGroups();
     }
 
-    function renameAllGroups() {
-        currentGroups.forEach((g, i) => g.name = funNames[Math.floor(Math.random() * funNames.length)] + ` (${i + 1})`);
-        renderGroups();
-    }
-
-    async function pickRepresentatives() {
+async function pickRepresentatives() {
         if (isPicking || !currentGroups.length) return;
         isPicking = true;
 
@@ -293,7 +285,6 @@
             document.getElementById('output').innerHTML = '';
             currentGroups = [];
             document.getElementById('repBtn').style.display = 'none';
-            document.querySelector('.btn-dice').style.display = 'none';
             handleInput();
         }
     }
@@ -305,7 +296,9 @@
     }
 
     window.onload = () => {
-        document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', savedTheme || (prefersDark ? 'dark' : 'light'));
         document.getElementById('inputData').value = localStorage.getItem('lastText') || '';
         handleInput();
         renderSavedList();
